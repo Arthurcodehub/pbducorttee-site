@@ -5,12 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PBDUCORTTEE | Barbearia em Balneário Gaivota</title>
   <meta name="description" content="PBDUCORTTEE, barbearia em Balneário Gaivota. Cortes, barba e serviços com agendamento pelo WhatsApp.">
+  <meta name="theme-color" content="#0d0d0d">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="PBDUCORTTEE | Barbearia em Balneário Gaivota">
+  <meta property="og:description" content="Cortes, barba e serviços com agendamento pelo WhatsApp.">
+
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
   <header class="site-header">
-    <nav class="container nav">
+    <nav class="container nav" aria-label="Menu principal">
       <a href="#inicio" class="logo">PBDUCORTTEE</a>
       <ul class="nav-links">
         <li><a href="#sobre">Sobre</a></li>
@@ -25,14 +32,14 @@
   <main>
 
     <!-- Apresentação -->
-  <section id="inicio" class="hero">
-    <div class="container hero-content">
-      <img src="assets/img/logo.png" alt="PBDUCORTTEE" class="hero-logo">
-      <h1>PBDUCORTTEE</h1>
-      <p>Barbearia em Balneário Gaivota. Corte, barba e estilo com atenção aos detalhes.</p>
-      <a href="#agendar" class="btn">Agendar pelo WhatsApp</a>
-    </div>
-  </section>
+    <section id="inicio" class="hero">
+      <div class="container hero-content">
+        <img src="assets/img/logo.png" alt="PBDUCORTTEE" class="hero-logo">
+        <h1>PBDUCORTTEE</h1>
+        <p>Barbearia em Balneário Gaivota. Corte, barba e estilo com atenção aos detalhes.</p>
+        <a href="#agendar" class="btn">Agendar pelo WhatsApp</a>
+      </div>
+    </section>
 
     <!-- Sobre -->
     <section id="sobre" class="secao">
@@ -165,6 +172,8 @@
 
           <p class="aviso">Atendimento de segunda a sábado, das 13h às 19h. A confirmação do horário é feita pelo WhatsApp.</p>
 
+          <p class="mensagem-erro" id="erro" role="alert" aria-live="polite"></p>
+
           <button type="submit" class="btn">Enviar pelo WhatsApp</button>
         </form>
       </div>
@@ -186,10 +195,10 @@
           </div>
 
           <div class="contato-item">
-  <h3>Horário</h3>
-  <p>Segunda a sábado, das 13h às 19h</p>
-  <p>Domingo: fechado</p>
-</div>
+            <h3>Horário</h3>
+            <p>Segunda a sábado, das 13h às 19h</p>
+            <p>Domingo: fechado</p>
+          </div>
 
           <div class="contato-item">
             <h3>Redes</h3>

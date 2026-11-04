@@ -34,7 +34,10 @@
 
   /** Mostra uma mensagem de erro ao usuário (ou limpa, se vazia). */
   function mostrarErro(texto) {
-    mensagemErro.textContent = texto;
+    // Protege contra o elemento não existir na página
+    if (mensagemErro) {
+      mensagemErro.textContent = texto;
+    }
   }
 
   /** Converte "HH:MM" em minutos desde meia-noite. */
@@ -165,6 +168,11 @@
 
     if (!nome || !servico || !data || !horario) {
       mostrarErro("Preencha todos os campos.");
+      return;
+    }
+
+    if (nome.length < 2) {
+      mostrarErro("Informe seu nome.");
       return;
     }
 
