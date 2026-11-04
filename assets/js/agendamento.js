@@ -79,9 +79,7 @@
   function montarMensagem(nome, servico, data, horario) {
     return (
       `Olá! Meu nome é ${nome}.\n` +
-      `Gostaria de agendar: ${servico}\n` +
-      `Data: ${formatarData(data)}\n` +
-      `Horário: ${horario}`
+      `Tem horário disponível para ${servico}, no dia ${formatarData(data)} às ${horario}?`
     );
   }
 
