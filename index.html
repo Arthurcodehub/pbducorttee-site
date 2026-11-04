@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PBDUCORTTEE | Barbearia em Balneário Gaivota</title>
+  <meta name="description" content="PBDUCORTTEE, barbearia em Balneário Gaivota. Cortes, barba e serviços com agendamento pelo WhatsApp.">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="container nav">
+      <a href="#inicio" class="logo">PBDUCORTTEE</a>
+      <ul class="nav-links">
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#trabalhos">Trabalhos</a></li>
+        <li><a href="#agendar">Agendar</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- Apresentação -->
+  <section id="inicio" class="hero">
+    <div class="container hero-content">
+      <img src="assets/img/logo.png" alt="PBDUCORTTEE" class="hero-logo">
+      <h1>PBDUCORTTEE</h1>
+      <p>Barbearia em Balneário Gaivota. Corte, barba e estilo com atenção aos detalhes.</p>
+      <a href="#agendar" class="btn">Agendar pelo WhatsApp</a>
+    </div>
+  </section>
+
+    <!-- Sobre -->
+    <section id="sobre" class="secao secao-escura">
+      <div class="container">
+        <h2 class="titulo-secao">Sobre a Barbearia</h2>
+        <p class="texto-centro">
+          Na PBDUCORTTEE, cada corte é feito com calma, técnica e atenção ao que você quer transmitir.
+          Do clássico ao moderno, a missão é sair daqui com o visual certo e com a confiança de quem se sente bem.
+        </p>
+      </div>
+    </section>
+
+    <!-- Serviços e preços -->
+    <section id="servicos" class="secao">
+      <div class="container">
+        <h2 class="titulo-secao">Serviços e Preços</h2>
+        <p class="subtitulo">Valores atualizados. Consulte o atendimento para detalhes.</p>
+
+        <ul class="grid-servicos">
+          <li class="card-servico">
+            <h3>Nevou</h3>
+            <span class="preco">R$ 180</span>
+          </li>
+          <li class="card-servico">
+            <h3>Luzes</h3>
+            <span class="preco">R$ 120</span>
+          </li>
+          <li class="card-servico">
+            <h3>Cabelo</h3>
+            <span class="preco">R$ 30</span>
+          </li>
+          <li class="card-servico">
+            <h3>Barba</h3>
+            <span class="preco">R$ 25</span>
+          </li>
+          <li class="card-servico">
+            <h3>Cavanhaque</h3>
+            <span class="preco">R$ 20</span>
+          </li>
+          <li class="card-servico">
+            <h3>Sobrancelha</h3>
+            <span class="preco">R$ 10</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Trabalhos -->
+    <section id="trabalhos" class="secao secao-escura">
+      <div class="container">
+        <h2 class="titulo-secao">Nossos Trabalhos</h2>
+        <p class="subtitulo">Alguns cortes feitos aqui na PBDUCORTTEE.</p>
+
+        <ul class="galeria">
+          <li>
+            <img src="assets/img/fotos/corte-01.png" alt="Corte masculino com acabamento detalhado" loading="lazy">
+          </li>
+          <li>
+            <img src="assets/img/fotos/corte-02.png" alt="Corte masculino com estilo moderno" loading="lazy">
+          </li>
+          <li>
+            <img src="assets/img/fotos/corte-03.png" alt="Corte masculino com acabamento na navalha" loading="lazy">
+          </li>
+          <li>
+            <img src="assets/img/fotos/corte-04.png" alt="Corte masculino com barba aparada" loading="lazy">
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Agendamento -->
+    <section id="agendar" class="secao">
+      <div class="container">
+        <h2 class="titulo-secao">Agende seu Horário</h2>
+        <p class="subtitulo">Escolha o serviço e o horário. Você será direcionado ao WhatsApp para confirmar.</p>
+
+        <form id="form-agendamento" class="form-agendamento" novalidate>
+          <label>
+            Nome
+            <input type="text" id="nome" name="nome" placeholder="Seu nome" autocomplete="name" required>
+          </label>
+
+          <label>
+            Serviço
+            <select id="servico" name="servico" required>
+              <option value="">Selecione um serviço</option>
+              <option value="Nevou (R$ 180)">Nevou (R$ 180)</option>
+              <option value="Luzes (R$ 120)">Luzes (R$ 120)</option>
+              <option value="Cabelo (R$ 30)">Cabelo (R$ 30)</option>
+              <option value="Barba (R$ 25)">Barba (R$ 25)</option>
+              <option value="Cavanhaque (R$ 20)">Cavanhaque (R$ 20)</option>
+              <option value="Sobrancelha (R$ 10)">Sobrancelha (R$ 10)</option>
+            </select>
+          </label>
+
+          <label>
+            Data
+            <input type="date" id="data" name="data" required>
+          </label>
+
+          <label>
+            Horário
+            <input type="time" id="horario" name="horario" min="08:00" max="19:00" step="1800" required>
+          </label>
+
+          <p class="mensagem-erro" id="erro" role="alert" aria-live="polite"></p>
+
+          <button type="submit" class="btn">Enviar pelo WhatsApp</button>
+
+          <p class="aviso">Atendimento de segunda a sábado. A confirmação do horário é feita pelo WhatsApp.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Contato e localização -->
+    <section id="contato" class="secao secao-escura">
+      <div class="container">
+        <h2 class="titulo-secao">Contato</h2>
+
+        <div class="contato-grid">
+          <div class="contato-item">
+            <h3>Endereço</h3>
+            <p>Rua Raul Inácio Nunes, 44<br>Lagoa de Fora, Balneário Gaivota - SC</p>
+            <p>
+              <a href="https://www.google.com/maps/search/?api=1&amp;query=Rua+Raul+Inacio+Nunes+44+Balneario+Gaivota"
+                 target="_blank" rel="noopener">Ver no mapa</a>
+            </p>
+          </div>
+
+          <div class="contato-item">
+            <h3>Horário</h3>
+            <p>Segunda a sábado</p>
+            <p>Domingo: fechado</p>
+          </div>
+
+          <div class="contato-item">
+            <h3>Redes</h3>
+            <p><a href="https://wa.me/554896437573" target="_blank" rel="noopener">WhatsApp</a></p>
+            <p><a href="https://www.instagram.com/pbducorttee_/" target="_blank" rel="noopener">@pbducorttee_</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 PBDUCORTTEE. Todos os direitos reservados.</p>
+    <p>Desenvolvido por <a href="https://www.instagram.com/fernandes.zwx_/" target="_blank" rel="noopener">Arthur Fernandes</a></p>
+  </footer>
+
+  <script src="assets/js/agendamento.js" defer></script>
+</body>
+</html>
