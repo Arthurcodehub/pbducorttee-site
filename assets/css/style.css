@@ -210,8 +210,10 @@ option {
 
 /* Logo no centro da apresentação, em moldura redonda */
 /* Logo no centro da apresentação, em quadrado arredondado */
+/* Logo no centro da apresentação, em quadrado arredondado */
 .hero-logo {
   width: min(240px, 60vw);
+  height: auto;
   aspect-ratio: 1 / 1;
   margin: 0 auto 28px;
   padding: 10px;
