@@ -11,8 +11,8 @@
   // Configurações do negócio. Mudou algo? Altere só aqui.
   const CONFIG = {
     whatsapp: "554896437573",
-    horaInicial: "08:00",
-    horaFinal: "19:00",
+    horaInicial: "13:00",
+    horaFinal: "19:00", // horário de fechamento (o último atendimento começa antes)
     diaFechado: 0, // 0 = domingo (padrão do JavaScript)
   };
 
@@ -41,6 +41,12 @@
     return `${dia}/${mes}/${ano}`;
   }
 
+  /** Converte "HH:MM" em minutos desde meia-noite. Facilita comparar horários. */
+  function paraMinutos(valorHora) {
+    const [h, m] = valorHora.split(":").map(Number);
+    return h * 60 + m;
+  }
+
   /** Define a data mínima como hoje, para não agendar no passado. */
   function definirDataMinima() {
     const hoje = new Date();
@@ -50,19 +56,22 @@
     campoData.min = `${ano}-${mes}-${dia}`;
   }
 
-  /** Retorna true se a data for domingo. */
+  /** Retorna true se a data cair no dia de folga. */
   function ehDiaFechado(valorIso) {
     return parseData(valorIso).getDay() === CONFIG.diaFechado;
   }
 
-  /** Retorna true se o horário estiver dentro do funcionamento e em blocos de 30 min. */
+  /**
+   * Retorna true se o horário for um início válido:
+   * dentro do expediente, antes do fechamento e em blocos de 30 minutos.
+   */
   function horarioValido(valorHora) {
-    const [h, m] = valorHora.split(":").map(Number);
-    const [hInicial] = CONFIG.horaInicial.split(":").map(Number);
-    const [hFinal] = CONFIG.horaFinal.split(":").map(Number);
+    const minutos = paraMinutos(valorHora);
+    const inicio = paraMinutos(CONFIG.horaInicial);
+    const fim = paraMinutos(CONFIG.horaFinal);
 
-    const dentroDoExpediente = h >= hInicial && h <= hFinal;
-    const blocoDe30 = m === 0 || m === 30;
+    const dentroDoExpediente = minutos >= inicio && minutos < fim;
+    const blocoDe30 = minutos % 30 === 0;
     return dentroDoExpediente && blocoDe30;
   }
 
@@ -94,9 +103,7 @@
     if (!campoHorario.value) return;
 
     if (!horarioValido(campoHorario.value)) {
-      mostrarErro(
-        `Escolha um horário entre ${CONFIG.horaInicial} e ${CONFIG.horaFinal}, em intervalos de 30 minutos.`
-      );
+      mostrarErro("Escolha um horário entre 13h e 18h30, em intervalos de 30 minutos.");
       campoHorario.value = "";
       return;
     }
