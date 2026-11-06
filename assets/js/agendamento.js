@@ -1,7 +1,7 @@
 /**
  * PBDUCORTTEE — agendamento via WhatsApp
  *
- * Valida o formulário e abre o WhatsApp com a mensagem pronta.
+ * Valida o formulário conforme o horário de cada dia e abre o WhatsApp com a mensagem pronta.
  * Não há checagem de disponibilidade: quem confirma o horário é a barbearia.
  */
 
@@ -11,10 +11,17 @@
   // Configurações do negócio. Mudou algo? Altere só aqui.
   const CONFIG = {
     whatsapp: "554896437573",
-    horaInicial: "13:00",
-    horaFinal: "19:00", // horário de fechamento
     intervaloMinutos: 30, // intervalo entre horários de início
-    diaFechado: 0, // 0 = domingo (padrão do JavaScript)
+    // Horário por dia da semana (0 = domingo). null = fechado.
+    horarios: {
+      0: null,
+      1: { abre: "13:30", fecha: "18:00" },
+      2: null,
+      3: { abre: "13:30", fecha: "18:00" },
+      4: { abre: "13:30", fecha: "21:00" },
+      5: { abre: "13:30", fecha: "21:00" },
+      6: { abre: "10:00", fecha: "18:00" },
+    },
   };
 
   const form = document.getElementById("form-agendamento");
@@ -27,10 +34,6 @@
   const campoData = document.getElementById("data");
   const campoHorario = document.getElementById("horario");
   const mensagemErro = document.getElementById("erro");
-
-  const minutosInicial = paraMinutos(CONFIG.horaInicial);
-  // O último atendimento começa um intervalo antes do fechamento
-  const ultimoInicio = paraMinutos(CONFIG.horaFinal) - CONFIG.intervaloMinutos;
 
   /** Mostra uma mensagem de erro ao usuário (ou limpa, se vazia). */
   function mostrarErro(texto) {
@@ -85,28 +88,46 @@
     return valorSelect.split(" (")[0];
   }
 
+  /**
+   * Retorna o expediente do dia escolhido, com o horário de início
+   * e o último horário possível. Retorna null se a barbearia estiver fechada.
+   */
+  function expedienteDo(valorIso) {
+    const horario = CONFIG.horarios[parseData(valorIso).getDay()];
+    if (!horario) return null;
+
+    return {
+      inicio: paraMinutos(horario.abre),
+      // O último atendimento começa um intervalo antes do fechamento
+      ultimoInicio: paraMinutos(horario.fecha) - CONFIG.intervaloMinutos,
+    };
+  }
+
   /** Retorna a mensagem de erro para a data, ou "" se estiver válida. */
   function validarData(valorIso) {
-    if (parseData(valorIso).getDay() === CONFIG.diaFechado) {
-      return "Não atendemos aos domingos. Escolha outro dia.";
-    }
     // Comparar strings "AAAA-MM-DD" funciona porque a ordem é cronológica
     if (valorIso < hojeIso()) {
       return "Escolha uma data de hoje em diante.";
+    }
+    if (!expedienteDo(valorIso)) {
+      return "Não atendemos nesse dia. Escolha outra data.";
     }
     return "";
   }
 
   /** Retorna a mensagem de erro para o horário, ou "" se estiver válido. */
   function validarHorario(dataIso, valorHora) {
-    const minutos = paraMinutos(valorHora);
-    const faixaPermitida = `Escolha um horário entre ${formatarHora(minutosInicial)} e ${formatarHora(ultimoInicio)}, em intervalos de ${CONFIG.intervaloMinutos} minutos.`;
+    const expediente = expedienteDo(dataIso);
+    if (!expediente) {
+      return "Não atendemos nesse dia. Escolha outra data.";
+    }
 
-    const dentroDoExpediente = minutos >= minutosInicial && minutos <= ultimoInicio;
+    const minutos = paraMinutos(valorHora);
+    const dentroDoExpediente = minutos >= expediente.inicio && minutos <= expediente.ultimoInicio;
     const blocoValido = minutos % CONFIG.intervaloMinutos === 0;
 
     if (!dentroDoExpediente || !blocoValido) {
-      return faixaPermitida;
+      return `Escolha um horário entre ${formatarHora(expediente.inicio)} e ${formatarHora(expediente.ultimoInicio)} para esse dia, em intervalos de ${CONFIG.intervaloMinutos} minutos.`;
     }
 
     if (dataIso === hojeIso() && minutos <= minutosAgora()) {
@@ -122,11 +143,6 @@
       `Olá! Meu nome é ${nome}.\n` +
       `Tem horário disponível para ${servico}, no dia ${formatarData(data)} às ${horario}?`
     );
-  }
-
-  /** Define a data mínima como hoje, para o calendário já começar nos dias válidos. */
-  function definirDataMinima() {
-    campoData.min = hojeIso();
   }
 
   // Validação ao escolher a data
@@ -146,6 +162,12 @@
   // Validação ao escolher o horário
   campoHorario.addEventListener("change", () => {
     if (!campoHorario.value) return;
+
+    if (!campoData.value) {
+      mostrarErro("Escolha primeiro a data.");
+      campoHorario.value = "";
+      return;
+    }
 
     const erro = validarHorario(campoData.value, campoHorario.value);
     if (erro) {
@@ -191,5 +213,6 @@
     window.open(url, "_blank", "noopener");
   });
 
-  definirDataMinima();
+  // O calendário começa em hoje; os dias fechados são recusados pelo JS
+  campoData.min = hojeIso();
 })();

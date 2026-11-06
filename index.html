@@ -6,7 +6,6 @@
   <title>PBDUCORTTEE | Barbearia em Balneário Gaivota</title>
   <meta name="description" content="PBDUCORTTEE, barbearia em Balneário Gaivota. Cortes, barba e serviços com agendamento pelo WhatsApp.">
   <meta name="theme-color" content="#0d0d0d">
-  
 
   <!-- Ícones -->
   <link rel="icon" href="assets/img/favicon.ico" sizes="any">
@@ -25,6 +24,47 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Logo da PBDUCORTTEE, barbearia em Balneário Gaivota">
   <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Dados estruturados: horários e dados iguais aos da ficha do Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BarberShop",
+    "name": "PBDUCORTTEE",
+    "url": "https://arthurcodehub.github.io/pbducorttee-site/",
+    "image": "https://arthurcodehub.github.io/pbducorttee-site/assets/img/logo.png",
+    "telephone": "+55 48 9643-7573",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Rua Raul Inácio Nunes, 44 - Lagoa de Fora",
+      "addressLocality": "Balneário Gaivota",
+      "addressRegion": "SC",
+      "postalCode": "88955-000",
+      "addressCountry": "BR"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Wednesday"],
+        "opens": "13:30",
+        "closes": "18:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Thursday", "Friday"],
+        "opens": "13:30",
+        "closes": "21:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Saturday",
+        "opens": "10:00",
+        "closes": "18:00"
+      }
+    ],
+    "sameAs": ["https://www.instagram.com/pbducorttee_/"]
+  }
+  </script>
 
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -153,7 +193,7 @@
     <section id="agendar" class="secao">
       <div class="container">
         <h2 class="titulo-secao">Agende seu Horário</h2>
-        <p class="subtitulo">Escolha o serviço e o horário. Você será direcionado ao WhatsApp para confirmar.</p>
+        <p class="subtitulo">Escolha o serviço, o dia e o horário. Você será direcionado ao WhatsApp para confirmar.</p>
 
         <form id="form-agendamento" class="form-agendamento" novalidate>
           <label>
@@ -181,10 +221,10 @@
 
           <label>
             Horário
-            <input type="time" id="horario" name="horario" min="13:00" max="18:30" step="1800" required>
+            <input type="time" id="horario" name="horario" min="10:00" max="21:00" step="1800" required>
           </label>
 
-          <p class="aviso">Atendimento de segunda a sábado, das 13h às 19h. A confirmação do horário é feita pelo WhatsApp.</p>
+          <p class="aviso">Confira os horários de atendimento na seção Contato. A confirmação do horário é feita pelo WhatsApp.</p>
 
           <p class="mensagem-erro" id="erro" role="alert" aria-live="polite"></p>
 
@@ -210,8 +250,10 @@
 
           <div class="contato-item">
             <h3>Horário</h3>
-            <p>Segunda a sábado, das 13h às 19h</p>
-            <p>Domingo: fechado</p>
+            <p>Segunda e quarta: 13h30 às 18h</p>
+            <p>Quinta e sexta: 13h30 às 21h</p>
+            <p>Sábado: 10h às 18h</p>
+            <p>Terça e domingo: fechado</p>
           </div>
 
           <div class="contato-item">
