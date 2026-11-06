@@ -559,3 +559,75 @@ option {
   text-transform: uppercase;
   color: var(--cor-texto-suave);
 }
+
+/* Faixa de avaliação antes do rodapé */
+.secao-avaliacao {
+  padding: 40px 0;
+  text-align: center;
+  border-top: 1px solid var(--cor-borda);
+}
+
+.secao-avaliacao p {
+  margin-bottom: 20px;
+  color: var(--cor-texto-suave);
+}
+
+/* Botão de avaliação: dourado, com estrela e leve brilho ao passar o mouse */
+.btn-avaliar {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #e8c75a 0%, var(--cor-dourado) 50%, #b8922a 100%);
+  color: var(--cor-fundo);
+  border: 2px solid var(--cor-dourado);
+  box-shadow: 0 6px 18px rgba(212, 175, 55, 0.25);
+}
+
+.btn-avaliar::before {
+  content: "★";
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.btn-avaliar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+
+.btn-avaliar:hover {
+  background: var(--cor-dourado);
+  color: var(--cor-fundo);
+  border-color: #f5e08a;
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.45);
+  transform: translateY(-2px);
+}
+
+.btn-avaliar:hover::after {
+  animation: brilho 0.9s ease;
+}
+
+@keyframes brilho {
+  from { left: -75%; }
+  to { left: 130%; }
+}
+
+/* Quem prefere menos movimento não vê o brilho nem o deslocamento */
+@media (prefers-reduced-motion: reduce) {
+  .btn-avaliar,
+  .btn-avaliar:hover {
+    transform: none;
+  }
+
+  .btn-avaliar:hover::after {
+    animation: none;
+  }
+}
