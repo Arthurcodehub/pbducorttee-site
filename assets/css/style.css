@@ -542,3 +542,8 @@ option {
     animation: none !important;
   }
 }
+
+.form-agendamento select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

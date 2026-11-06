@@ -1,7 +1,7 @@
 /**
  * PBDUCORTTEE — agendamento via WhatsApp
  *
- * Valida o formulário conforme o horário de cada dia e abre o WhatsApp com a mensagem pronta.
+ * O campo de horário só mostra os horários válidos do dia escolhido.
  * Não há checagem de disponibilidade: quem confirma o horário é a barbearia.
  */
 
@@ -37,7 +37,6 @@
 
   /** Mostra uma mensagem de erro ao usuário (ou limpa, se vazia). */
   function mostrarErro(texto) {
-    // Protege contra o elemento não existir na página
     if (mensagemErro) {
       mensagemErro.textContent = texto;
     }
@@ -54,6 +53,13 @@
     const h = Math.floor(minutos / 60);
     const m = minutos % 60;
     return m === 0 ? `${h}h` : `${h}h${String(m).padStart(2, "0")}`;
+  }
+
+  /** Converte minutos em "HH:MM", que é o valor que o campo de horário usa. */
+  function paraValorHora(minutos) {
+    const h = String(Math.floor(minutos / 60)).padStart(2, "0");
+    const m = String(minutos % 60).padStart(2, "0");
+    return `${h}:${m}`;
   }
 
   /** Retorna a data de hoje no formato "AAAA-MM-DD", no horário local. */
@@ -103,6 +109,51 @@
     };
   }
 
+  /**
+   * Lista os horários de início válidos para a data, em minutos.
+   * Se a data for hoje, remove os horários que já passaram.
+   */
+  function horariosDoDia(dataIso) {
+    const expediente = expedienteDo(dataIso);
+    if (!expediente) return [];
+
+    const eHoje = dataIso === hojeIso();
+    const agora = minutosAgora();
+    const lista = [];
+
+    for (let m = expediente.inicio; m <= expediente.ultimoInicio; m += CONFIG.intervaloMinutos) {
+      if (eHoje && m <= agora) continue;
+      lista.push(m);
+    }
+
+    return lista;
+  }
+
+  /** Preenche o campo de horário com os horários válidos do dia escolhido. */
+  function preencherHorarios(dataIso) {
+    campoHorario.innerHTML = "";
+
+    if (!dataIso) {
+      campoHorario.add(new Option("Escolha primeiro a data", ""));
+      campoHorario.disabled = true;
+      return;
+    }
+
+    const minutosDisponiveis = horariosDoDia(dataIso);
+
+    if (minutosDisponiveis.length === 0) {
+      campoHorario.add(new Option("Sem horários disponíveis", ""));
+      campoHorario.disabled = true;
+      return;
+    }
+
+    campoHorario.add(new Option("Selecione um horário", ""));
+    minutosDisponiveis.forEach((minutos) => {
+      campoHorario.add(new Option(formatarHora(minutos), paraValorHora(minutos)));
+    });
+    campoHorario.disabled = false;
+  }
+
   /** Retorna a mensagem de erro para a data, ou "" se estiver válida. */
   function validarData(valorIso) {
     // Comparar strings "AAAA-MM-DD" funciona porque a ordem é cronológica
@@ -111,6 +162,9 @@
     }
     if (!expedienteDo(valorIso)) {
       return "Não atendemos nesse dia. Escolha outra data.";
+    }
+    if (horariosDoDia(valorIso).length === 0) {
+      return "Não há mais horários disponíveis nesse dia. Escolha outra data.";
     }
     return "";
   }
@@ -127,7 +181,7 @@
     const blocoValido = minutos % CONFIG.intervaloMinutos === 0;
 
     if (!dentroDoExpediente || !blocoValido) {
-      return `Escolha um horário entre ${formatarHora(expediente.inicio)} e ${formatarHora(expediente.ultimoInicio)} para esse dia, em intervalos de ${CONFIG.intervaloMinutos} minutos.`;
+      return "Escolha um horário da lista.";
     }
 
     if (dataIso === hojeIso() && minutos <= minutosAgora()) {
@@ -145,38 +199,25 @@
     );
   }
 
-  // Validação ao escolher a data
+  // Ao escolher a data, valida e atualiza a lista de horários
   campoData.addEventListener("change", () => {
-    if (!campoData.value) return;
+    const data = campoData.value;
 
-    const erro = validarData(campoData.value);
+    if (!data) {
+      preencherHorarios("");
+      return;
+    }
+
+    const erro = validarData(data);
     if (erro) {
       mostrarErro(erro);
       campoData.value = "";
+      preencherHorarios("");
       return;
     }
 
     mostrarErro("");
-  });
-
-  // Validação ao escolher o horário
-  campoHorario.addEventListener("change", () => {
-    if (!campoHorario.value) return;
-
-    if (!campoData.value) {
-      mostrarErro("Escolha primeiro a data.");
-      campoHorario.value = "";
-      return;
-    }
-
-    const erro = validarHorario(campoData.value, campoHorario.value);
-    if (erro) {
-      mostrarErro(erro);
-      campoHorario.value = "";
-      return;
-    }
-
-    mostrarErro("");
+    preencherHorarios(data);
   });
 
   // Envio do formulário
@@ -198,7 +239,7 @@
       return;
     }
 
-    // Revalida tudo no envio, porque a data e o horário podem ter sido digitados à mão
+    // Revalida no envio, porque o campo pode ter sido alterado por fora do formulário
     const erro = validarData(data) || validarHorario(data, horario);
     if (erro) {
       mostrarErro(erro);
@@ -215,4 +256,7 @@
 
   // O calendário começa em hoje; os dias fechados são recusados pelo JS
   campoData.min = hojeIso();
+
+  // Ao carregar, respeita a data que o navegador possa ter guardado no campo
+  preencherHorarios(campoData.value);
 })();
