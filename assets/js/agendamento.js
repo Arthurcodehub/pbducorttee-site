@@ -1,7 +1,7 @@
 /**
  * PBDUCORTTEE — agendamento via WhatsApp
  *
- * O campo de horário só mostra os horários válidos do dia escolhido.
+ * Permite escolher mais de um serviço, soma o total e abre o WhatsApp com a mensagem pronta.
  * Não há checagem de disponibilidade: quem confirma o horário é a barbearia.
  */
 
@@ -30,10 +30,11 @@
   if (!form) return;
 
   const campoNome = document.getElementById("nome");
-  const campoServico = document.getElementById("servico");
   const campoData = document.getElementById("data");
   const campoHorario = document.getElementById("horario");
   const mensagemErro = document.getElementById("erro");
+  const totalEl = document.getElementById("total-servicos");
+  const checkboxes = Array.from(document.querySelectorAll('input[name="servico"]'));
 
   /** Mostra uma mensagem de erro ao usuário (ou limpa, se vazia). */
   function mostrarErro(texto) {
@@ -89,9 +90,23 @@
     return `${dia}/${mes}/${ano}`;
   }
 
-  /** Remove o preço do valor do select: "Nevou (R$ 180)" vira "Nevou". */
-  function nomeDoServico(valorSelect) {
-    return valorSelect.split(" (")[0];
+  /** Retorna os serviços marcados, com nome e preço. */
+  function servicosSelecionados() {
+    return checkboxes
+      .filter((cb) => cb.checked)
+      .map((cb) => ({ nome: cb.value, preco: Number(cb.dataset.preco) }));
+  }
+
+  /** Junta nomes em texto: "Cabelo", "Cabelo e Barba", "Cabelo, Barba e Luzes". */
+  function juntarNomes(nomes) {
+    if (nomes.length <= 1) return nomes.join("");
+    return `${nomes.slice(0, -1).join(", ")} e ${nomes[nomes.length - 1]}`;
+  }
+
+  /** Atualiza o texto do total com a soma dos serviços marcados. */
+  function atualizarTotal() {
+    const total = servicosSelecionados().reduce((soma, s) => soma + s.preco, 0);
+    totalEl.textContent = `Total: R$ ${total}`;
   }
 
   /**
@@ -191,11 +206,14 @@
     return "";
   }
 
-  /** Monta o texto que vai para o WhatsApp. */
-  function montarMensagem(nome, servico, data, horario) {
+  /** Monta o texto que vai para o WhatsApp, com os serviços e o total. */
+  function montarMensagem(nome, servicos, data, horario) {
+    const nomes = juntarNomes(servicos.map((s) => s.nome));
+    const total = servicos.reduce((soma, s) => soma + s.preco, 0);
+
     return (
       `Olá! Meu nome é ${nome}.\n` +
-      `Tem horário disponível para ${servico}, no dia ${formatarData(data)} às ${horario}?`
+      `Tem horário disponível para ${nomes} (total R$ ${total}), no dia ${formatarData(data)} às ${horario}?`
     );
   }
 
@@ -220,17 +238,30 @@
     preencherHorarios(data);
   });
 
+  // Ao marcar ou desmarcar um serviço, atualiza o total
+  checkboxes.forEach((cb) => {
+    cb.addEventListener("change", () => {
+      atualizarTotal();
+      mostrarErro("");
+    });
+  });
+
   // Envio do formulário
   form.addEventListener("submit", (evento) => {
     evento.preventDefault();
 
     const nome = campoNome.value.trim();
-    const servico = campoServico.value;
+    const servicos = servicosSelecionados();
     const data = campoData.value;
     const horario = campoHorario.value;
 
-    if (!nome || !servico || !data || !horario) {
-      mostrarErro("Preencha todos os campos.");
+    if (servicos.length === 0) {
+      mostrarErro("Escolha pelo menos um serviço.");
+      return;
+    }
+
+    if (!nome || !data || !horario) {
+      mostrarErro("Preencha nome, data e horário.");
       return;
     }
 
@@ -248,7 +279,7 @@
 
     mostrarErro("");
 
-    const mensagem = montarMensagem(nome, nomeDoServico(servico), data, horario);
+    const mensagem = montarMensagem(nome, servicos, data, horario);
     const url = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(mensagem)}`;
 
     window.open(url, "_blank", "noopener");
@@ -257,6 +288,10 @@
   // O calendário começa em hoje; os dias fechados são recusados pelo JS
   campoData.min = hojeIso();
 
-  // Ao carregar, respeita a data que o navegador possa ter guardado no campo
+  // Ao carregar, limpa a data se o navegador tiver preenchido uma data inválida
+  if (campoData.value && validarData(campoData.value)) {
+    campoData.value = "";
+  }
   preencherHorarios(campoData.value);
+  atualizarTotal();
 })();

@@ -204,18 +204,36 @@
             <input type="text" id="nome" name="nome" placeholder="Seu nome" autocomplete="name" required>
           </label>
 
-          <label>
-            Serviço
-            <select id="servico" name="servico" required>
-              <option value="">Selecione um serviço</option>
-              <option value="Nevou (R$ 180)">Nevou (R$ 180)</option>
-              <option value="Luzes (R$ 120)">Luzes (R$ 120)</option>
-              <option value="Cabelo (R$ 30)">Cabelo (R$ 30)</option>
-              <option value="Barba (R$ 25)">Barba (R$ 25)</option>
-              <option value="Cavanhaque (R$ 20)">Cavanhaque (R$ 20)</option>
-              <option value="Sobrancelha (R$ 10)">Sobrancelha (R$ 10)</option>
-            </select>
-          </label>
+          <fieldset class="grupo-servicos">
+            <legend>Serviços (pode escolher mais de um)</legend>
+
+            <label class="opcao-servico">
+              <span><input type="checkbox" name="servico" value="Nevou" data-preco="180"> Nevou</span>
+              <span class="preco-opcao">R$ 180</span>
+            </label>
+            <label class="opcao-servico">
+              <span><input type="checkbox" name="servico" value="Luzes" data-preco="120"> Luzes</span>
+              <span class="preco-opcao">R$ 120</span>
+            </label>
+            <label class="opcao-servico">
+              <span><input type="checkbox" name="servico" value="Cabelo" data-preco="30"> Cabelo</span>
+              <span class="preco-opcao">R$ 30</span>
+            </label>
+            <label class="opcao-servico">
+              <span><input type="checkbox" name="servico" value="Barba" data-preco="25"> Barba</span>
+              <span class="preco-opcao">R$ 25</span>
+            </label>
+            <label class="opcao-servico">
+              <span><input type="checkbox" name="servico" value="Cavanhaque" data-preco="20"> Cavanhaque</span>
+              <span class="preco-opcao">R$ 20</span>
+            </label>
+            <label class="opcao-servico">
+              <span><input type="checkbox" name="servico" value="Sobrancelha" data-preco="10"> Sobrancelha</span>
+              <span class="preco-opcao">R$ 10</span>
+            </label>
+          </fieldset>
+
+          <p class="total-servicos" id="total-servicos" aria-live="polite">Total: R$ 0</p>
 
           <label>
             Data

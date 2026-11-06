@@ -208,8 +208,7 @@ option {
   font-size: clamp(1rem, 3.5vw, 1.2rem);
 }
 
-/* Logo no centro da apresentação, em moldura redonda */
-/* Logo no centro da apresentação, em quadrado arredondado */
+
 /* Logo no centro da apresentação, em quadrado arredondado */
 .hero-logo {
   width: min(240px, 60vw);
@@ -630,4 +629,61 @@ option {
   .btn-avaliar:hover::after {
     animation: none;
   }
+}
+
+/* Seleção de múltiplos serviços */
+.grupo-servicos {
+  border: 0;
+  min-width: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.grupo-servicos legend {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  color: var(--cor-texto-suave);
+}
+
+/* Duas classes no seletor para vencer a regra geral de .form-agendamento label */
+.form-agendamento .opcao-servico {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--cor-fundo);
+  border: 1px solid #333;
+  border-radius: 4px;
+  color: var(--cor-texto);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.form-agendamento .opcao-servico:has(input:checked) {
+  border-color: var(--cor-dourado);
+}
+
+.form-agendamento .opcao-servico input {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  margin-right: 10px;
+  background: none;
+  border: 0;
+  accent-color: var(--cor-dourado);
+  cursor: pointer;
+}
+
+.preco-opcao {
+  color: var(--cor-dourado);
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.total-servicos {
+  text-align: right;
+  font-size: 1.05rem;
+  font-weight: bold;
+  color: var(--cor-dourado);
 }
