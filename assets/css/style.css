@@ -547,3 +547,15 @@ option {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* Termo de busca no H1, em linha menor abaixo do nome */
+.h1-apoio {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--fonte-corpo);
+  font-size: clamp(0.85rem, 3vw, 1.1rem);
+  font-weight: normal;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+}
