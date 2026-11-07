@@ -249,10 +249,11 @@ option {
   letter-spacing: 2px;
   color: var(--cor-dourado);
 }
-
 .nav-links {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(16px, 4vw, 32px);
   width: 100%;
   overflow-x: auto;
   scrollbar-width: none;
