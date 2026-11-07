@@ -88,7 +88,7 @@
 
   <main>
 
-    <!-- Apresentação -->
+    <!-- 1. Apresentação: nome, cidade e ação principal logo na primeira tela -->
     <section id="inicio" class="hero">
       <div class="container hero-content">
         <img src="assets/img/logo.png" alt="Logo da PBDUCORTTEE" class="hero-logo" width="512" height="512">
@@ -134,43 +134,8 @@
       </div>
     </section>
 
-    <!-- Serviços e preços -->
-    <section id="servicos" class="secao">
-      <div class="container">
-        <h2 class="titulo-secao">Serviços e Preços</h2>
-        <p class="subtitulo">Valores atualizados. Consulte o atendimento para detalhes.</p>
-
-        <ul class="grid-servicos">
-          <li class="card-servico">
-            <h3>Nevou</h3>
-            <span class="preco">R$ 180</span>
-          </li>
-          <li class="card-servico">
-            <h3>Luzes</h3>
-            <span class="preco">R$ 120</span>
-          </li>
-          <li class="card-servico">
-            <h3>Cabelo</h3>
-            <span class="preco">R$ 30</span>
-          </li>
-          <li class="card-servico">
-            <h3>Barba</h3>
-            <span class="preco">R$ 25</span>
-          </li>
-          <li class="card-servico">
-            <h3>Cavanhaque</h3>
-            <span class="preco">R$ 20</span>
-          </li>
-          <li class="card-servico">
-            <h3>Sobrancelha</h3>
-            <span class="preco">R$ 10</span>
-          </li>
-        </ul>
-      </div>
-    </section>
-
     <!-- Trabalhos -->
-    <section id="trabalhos" class="secao secao-escura">
+    <section id="trabalhos" class="secao">
       <div class="container">
         <h2 class="titulo-secao">Nossos Trabalhos</h2>
         <p class="subtitulo">Alguns cortes feitos aqui na PBDUCORTTEE.</p>
@@ -192,62 +157,99 @@
       </div>
     </section>
 
-    <!-- Agendamento -->
-    <section id="agendar" class="secao">
+    <!-- 2. Agendamento: serviços, data, horário e dados em passos numerados -->
+    <section id="agendar" class="secao secao-escura">
       <div class="container">
         <h2 class="titulo-secao">Agende seu Horário</h2>
-        <p class="subtitulo">Escolha o serviço, o dia e o horário. Você será direcionado ao WhatsApp para confirmar.</p>
+        <p class="subtitulo">Em quatro passos você envia o pedido pelo WhatsApp. A confirmação é feita pela barbearia.</p>
 
         <form id="form-agendamento" class="form-agendamento" novalidate>
-          <label>
-            Nome
-            <input type="text" id="nome" name="nome" placeholder="Seu nome" autocomplete="name" required>
-          </label>
 
-          <fieldset class="grupo-servicos">
-            <legend>Serviços (pode escolher mais de um)</legend>
+          <!-- Passo 1: serviços e preços -->
+          <fieldset class="passo" id="servicos">
+            <legend>
+              <span class="numero-passo">1</span>
+              Escolha os serviços (pode marcar mais de um)
+            </legend>
 
-            <label class="opcao-servico">
-              <span><input type="checkbox" name="servico" value="Nevou" data-preco="180"> Nevou</span>
-              <span class="preco-opcao">R$ 180</span>
-            </label>
-            <label class="opcao-servico">
-              <span><input type="checkbox" name="servico" value="Luzes" data-preco="120"> Luzes</span>
-              <span class="preco-opcao">R$ 120</span>
-            </label>
-            <label class="opcao-servico">
-              <span><input type="checkbox" name="servico" value="Cabelo" data-preco="30"> Cabelo</span>
-              <span class="preco-opcao">R$ 30</span>
-            </label>
-            <label class="opcao-servico">
-              <span><input type="checkbox" name="servico" value="Barba" data-preco="25"> Barba</span>
-              <span class="preco-opcao">R$ 25</span>
-            </label>
-            <label class="opcao-servico">
-              <span><input type="checkbox" name="servico" value="Cavanhaque" data-preco="20"> Cavanhaque</span>
-              <span class="preco-opcao">R$ 20</span>
-            </label>
-            <label class="opcao-servico">
-              <span><input type="checkbox" name="servico" value="Sobrancelha" data-preco="10"> Sobrancelha</span>
-              <span class="preco-opcao">R$ 10</span>
+            <div class="lista-servicos">
+              <label class="opcao-servico">
+                <input type="checkbox" name="servico" value="Nevou" data-preco="180">
+                <span class="opcao-nome">Nevou</span>
+                <span class="preco-opcao">R$ 180</span>
+              </label>
+              <label class="opcao-servico">
+                <input type="checkbox" name="servico" value="Luzes" data-preco="120">
+                <span class="opcao-nome">Luzes</span>
+                <span class="preco-opcao">R$ 120</span>
+              </label>
+              <label class="opcao-servico">
+                <input type="checkbox" name="servico" value="Cabelo" data-preco="30">
+                <span class="opcao-nome">Cabelo</span>
+                <span class="preco-opcao">R$ 30</span>
+              </label>
+              <label class="opcao-servico">
+                <input type="checkbox" name="servico" value="Barba" data-preco="25">
+                <span class="opcao-nome">Barba</span>
+                <span class="preco-opcao">R$ 25</span>
+              </label>
+              <label class="opcao-servico">
+                <input type="checkbox" name="servico" value="Cavanhaque" data-preco="20">
+                <span class="opcao-nome">Cavanhaque</span>
+                <span class="preco-opcao">R$ 20</span>
+              </label>
+              <label class="opcao-servico">
+                <input type="checkbox" name="servico" value="Sobrancelha" data-preco="10">
+                <span class="opcao-nome">Sobrancelha</span>
+                <span class="preco-opcao">R$ 10</span>
+              </label>
+            </div>
+
+            <p class="total-servicos" id="total-servicos" aria-live="polite">Total: R$ 0</p>
+          </fieldset>
+
+          <!-- Passo 2: data -->
+          <fieldset class="passo">
+            <legend>
+              <span class="numero-passo">2</span>
+              Escolha o dia
+            </legend>
+
+            <label>
+              Data
+              <input type="date" id="data" name="data" required>
             </label>
           </fieldset>
 
-          <p class="total-servicos" id="total-servicos" aria-live="polite">Total: R$ 0</p>
+          <!-- Passo 3: horário (a lista muda conforme o dia) -->
+          <fieldset class="passo">
+            <legend>
+              <span class="numero-passo">3</span>
+              Escolha o horário
+            </legend>
 
-          <label>
-            Data
-            <input type="date" id="data" name="data" required>
-          </label>
+            <label>
+              Horário
+              <select id="horario" name="horario" required disabled>
+                <option value="">Escolha primeiro a data</option>
+              </select>
+            </label>
+          </fieldset>
 
-          <label>
-            Horário
-            <select id="horario" name="horario" required disabled>
-              <option value="">Escolha primeiro a data</option>
-            </select>
-          </label>
+          <!-- Passo 4: seus dados -->
+          <fieldset class="passo">
+            <legend>
+              <span class="numero-passo">4</span>
+              Seus dados
+            </legend>
 
-          <p class="aviso">Confira os horários de atendimento na seção Contato. A confirmação do horário é feita pelo WhatsApp.</p>
+            <label>
+              Nome
+              <input type="text" id="nome" name="nome" placeholder="Seu nome" autocomplete="name" required>
+            </label>
+          </fieldset>
+
+          <p class="aviso">Atendimento conforme os horários da seção Contato. A confirmação é feita pelo WhatsApp.</p>
 
           <p class="mensagem-erro" id="erro" role="alert" aria-live="polite"></p>
 
@@ -256,14 +258,8 @@
       </div>
     </section>
 
-    <section class="secao-avaliacao">
-     <div class="container">
-        <p>Gostou do atendimento? Sua avaliação ajuda outros clientes a nos encontrar.</p>
-        <a href="https://g.page/r/CUrLeezlj0ZXEBM/review" class="btn btn-avaliar" target="_blank" rel="noopener">Avaliar no Google</a>
-     </div>
-    </section>
-    <!-- Contato e localização -->
-    <section id="contato" class="secao secao-escura">
+    <!-- 3. Contato e localização -->
+    <section id="contato" class="secao">
       <div class="container">
         <h2 class="titulo-secao">Contato</h2>
 
@@ -291,6 +287,14 @@
             <p><a href="https://www.instagram.com/pbducorttee_/" target="_blank" rel="noopener">@pbducorttee_</a></p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- 4. Avaliação: depois do contato, para não atrapalhar o caminho até o agendamento -->
+    <section class="secao-avaliacao">
+      <div class="container">
+        <p>Gostou do atendimento? Sua avaliação ajuda outros clientes a nos encontrar.</p>
+        <a href="https://g.page/r/CUrLeezlj0ZXEBM/review" class="btn btn-avaliar" target="_blank" rel="noopener">Avaliar no Google</a>
       </div>
     </section>
 
