@@ -1,50 +1,42 @@
 # PBDUCORTTEE
 
-Site institucional da barbearia PBDUCORTTEE, em Balneário Gaivota (SC).
+Site oficial da **PBDUCORTTEE**, barbearia em Balneário Gaivota (SC), com informações sobre serviços, trabalhos e contato.
 
-## Funcionalidades
+🌐 [Acesse o site](https://arthurcodehub.github.io/pbducorttee-site/)
 
-- Apresentação, sobre, serviços e preços
-- Galeria de trabalhos
-- Agendamento que abre o WhatsApp com serviço, data e horário preenchidos
-- Contato e localização
+## O que oferece
+
+- Apresentação da barbearia e galeria de cortes.
+- Serviços, preços e cálculo automático do total.
+- Pedido de agendamento enviado pelo WhatsApp — a barbearia confirma a disponibilidade.
+- Endereço, horários e links de contato.
 
 ## Tecnologias
 
-HTML, CSS e JavaScript puros. Não há frameworks nem etapa de build.
+HTML, CSS e JavaScript puro. Projeto estático, sem dependências ou etapa de build.
 
-## Estrutura
+## Executar localmente
 
-```
-pbducorttee/
-├── index.html
-├── README.md
-├── .gitignore
-└── assets/
-    ├── css/
-    │   └── style.css
-    ├── js/
-    │   └── agendamento.js
-    └── img/
-        ├── logo.png
-        └── fotos/
+Abra `index.html` no navegador ou inicie um servidor local:
+
+```bash
+python -m http.server 8000
 ```
 
-## Como visualizar localmente
+Acesse `http://localhost:8000`.
 
-Abra o arquivo `index.html` no navegador.
+## Personalização
 
-## Configuração
-
-- **WhatsApp e horário de atendimento:** objeto `CONFIG` em `assets/js/agendamento.js`.
-- **Serviços e preços:** estão em dois lugares no `index.html`, nos cards da seção "Serviços e Preços" e nas opções do campo "Serviço" do formulário. Ao alterar um preço, atualize os dois.
+- Horários e WhatsApp: `CONFIG` em `assets/js/agendamento.js`.
+- Serviços e preços: opções em `index.html` (atributo `data-preco`).
+- Conteúdo e estilos: `index.html` e `assets/css/style.css`.
 
 ## Publicação
 
-O site é publicado com GitHub Pages, a partir da branch `main`, pasta `/ (root)`.
+Hospedado no GitHub Pages pela branch `main`, na pasta raiz.
 
-Cada `push` na `main` atualiza o site em alguns minutos.
+## Contato
 
-## Créditos
+[Instagram @pbducorttee_](https://www.instagram.com/pbducorttee_/) · [WhatsApp](https://wa.me/554896437573)
 
-Desenvolvido por Arthur Fernandes.
+Desenvolvido por [Arthur Fernandes](https://www.instagram.com/fernandes.zwx_/).
